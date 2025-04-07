@@ -1233,7 +1233,7 @@ class Dot2PSTricksConv(DotConvBase):
             else:
                 stylestr = style
 
-        s += "  \psellipse[%s](%sbp,%sbp)(%sbp,%sbp)\n" % (stylestr, smart_float(x), smart_float(y),
+        s += "  \\psellipse[%s](%sbp,%sbp)(%sbp,%sbp)\n" % (stylestr, smart_float(x), smart_float(y),
                                                            # w+self.linewidth,h+self.linewidth)
                                                            smart_float(w), smart_float(h))
 
@@ -1253,13 +1253,13 @@ class Dot2PSTricksConv(DotConvBase):
             else:
                 stylestr = style
 
-        s = "  \pspolygon[%s]%s\n" % (stylestr, "".join(pp))
+        s = "  \\pspolygon[%s]%s\n" % (stylestr, "".join(pp))
         return s
 
     def draw_polyline(self, drawop, style=None):
         op, points = drawop
         pp = ['(%sbp,%sbp)' % (smart_float(p[0]), smart_float(p[1])) for p in points]
-        s = "  \psline%s\n" % "".join(pp)
+        s = "  \\psline%s\n" % "".join(pp)
         return s
 
     def draw_bezier(self, drawop, style=None):
@@ -1269,7 +1269,7 @@ class Dot2PSTricksConv(DotConvBase):
             pp.append("(%sbp,%sbp)" % (smart_float(point[0]), smart_float(point[1])))
 
         arrowstyle = ""
-        return "  \psbezier{%s}%s\n" % (arrowstyle, "".join(pp))
+        return "  \\psbezier{%s}%s\n" % (arrowstyle, "".join(pp))
 
     def draw_text(self, drawop, style=None):
         if len(drawop) == 7:
@@ -1296,21 +1296,21 @@ class Dot2PSTricksConv(DotConvBase):
             # set pen color
             if self.pencolor != color:
                 self.pencolor = color
-                s = "  \psset{linecolor=%s}\n" % color
+                s = "  \\psset{linecolor=%s}\n" % color
             else:
                 return ""
         elif c == 'C':
             # set fill color
             if self.fillcolor != color:
                 self.fillcolor = color
-                s = "  \psset{fillcolor=%s}\n" % color
+                s = "  \\psset{fillcolor=%s}\n" % color
             else:
                 return ""
         elif c == 'cC':
             if self.color != color:
                 self.color = color
                 self.pencolor = self.fillcolor = color
-                s = "  \psset{linecolor=%s}\n" % color
+                s = "  \\psset{linecolor=%s}\n" % color
         else:
             log.warning('Unhandled color: %s', drawop)
         return s
@@ -1319,7 +1319,7 @@ class Dot2PSTricksConv(DotConvBase):
         c, style = drawop
         psstyle = self.styles.get(style, "")
         if psstyle:
-            return "  \psset{%s}\n" % psstyle
+            return "  \\psset{%s}\n" % psstyle
         else:
             return ""
 
@@ -1390,9 +1390,9 @@ class Dot2PSTricksConv(DotConvBase):
             else:
                 stylestr = ""
             if not self.options.get('straightedges'):
-                s += "  \psbezier[%s]%s\n" % (stylestr, "".join(pp))
+                s += "  \\psbezier[%s]%s\n" % (stylestr, "".join(pp))
             else:
-                s += "  \psline[%s]%s%s\n" % (stylestr, pp[0], pp[-1])
+                s += "  \\psline[%s]%s%s\n" % (stylestr, pp[0], pp[-1])
                 # s += "  \psbezier[%s]{%s}%s\n" % (stylestr, arrowstyle,"".join(pp))
                 ##        if edge.label:
                 ##            x,y = edge.lp.split(',')
