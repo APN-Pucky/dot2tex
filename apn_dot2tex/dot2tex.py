@@ -1587,7 +1587,7 @@ class Dot2PGFConv(DotConvBase):
                            rounded='rounded corners', )
         self.dashstyles = dict(
             dashed='\\pgfsetdash{{3pt}{3pt}}{0pt}',
-            dotted='\\pgfsetdash{{\pgflinewidth}{2pt}}{0pt}',
+            dotted='\\pgfsetdash{{\\pgflinewidth}{2pt}}{0pt}',
             bold='\\pgfsetlinewidth{1.2pt}')
 
     def start_node(self, node):
@@ -1636,9 +1636,9 @@ class Dot2PGFConv(DotConvBase):
                 self.fillcolor = color
                 if ccolor.startswith('{'):
                     # rgb or hsb
-                    s += "  \definecolor{newcol}%s;\n" % ccolor
+                    s += "  \\definecolor{newcol}%s;\n" % ccolor
                     ccolor = 'newcol'
-                s += "  \pgfsetcolor{%s}\n" % ccolor
+                s += "  \\pgfsetcolor{%s}\n" % ccolor
         elif c == 'c':
             # set pen color
             if self.pencolor != color:
@@ -1646,9 +1646,9 @@ class Dot2PGFConv(DotConvBase):
                 self.color = ''
                 if ccolor.startswith('{'):
                     # rgb or hsb
-                    s += "  \definecolor{strokecol}%s;\n" % ccolor
+                    s += "  \\definecolor{strokecol}%s;\n" % ccolor
                     ccolor = 'strokecol'
-                s += "  \pgfsetstrokecolor{%s}\n" % ccolor
+                s += "  \\pgfsetstrokecolor{%s}\n" % ccolor
             else:
                 return ""
         elif c == 'C':
@@ -1658,9 +1658,9 @@ class Dot2PGFConv(DotConvBase):
                 self.color = ''
                 if ccolor.startswith('{'):
                     # rgb
-                    s += "  \definecolor{fillcol}%s;\n" % ccolor
+                    s += "  \\definecolor{fillcol}%s;\n" % ccolor
                     ccolor = 'fillcol'
-                s += "  \pgfsetfillcolor{%s}\n" % ccolor
+                s += "  \\pgfsetfillcolor{%s}\n" % ccolor
                 if not opacity is None:
                     self.opacity = opacity
                     # Todo: The opacity should probably be set directly when drawing
@@ -2107,9 +2107,9 @@ class Dot2TikZConv(Dot2PGFConv):
                            bold='very thick', filled='fill', invis="", invisible="",
                            rounded='rounded corners', )
         self.dashstyles = dict(
-            dashed='\pgfsetdash{{3pt}{3pt}}{0pt}',
-            dotted='\pgfsetdash{{\pgflinewidth}{2pt}}{0pt}',
-            bold='\pgfsetlinewidth{1.2pt}')
+            dashed='\\pgfsetdash{{3pt}{3pt}}{0pt}',
+            dotted='\\pgfsetdash{{\\pgflinewidth}{2pt}}{0pt}',
+            bold='\\pgfsetlinewidth{1.2pt}')
 
     def set_options(self):
         Dot2PGFConv.set_options(self)
@@ -2494,7 +2494,7 @@ class Dot2PSTricksNConv(Dot2PSTricksConv):
                 sn += "\\rput(%s){\\rnode{%s}{\\%s[%s]{%s}}}\n" % \
                       (pos, tikzify(node.name), psshape, psshadeoption, label)
             else:
-                sn += "\\rput(%s){\\rnode{%s}{\\%s[%s]{\parbox[c][%sin][c]{%sin}{\centering %s}}}}\n" % \
+                sn += "\\rput(%s){\\rnode{%s}{\\%s[%s]{\\parbox[c][%sin][c]{%sin}{\\centering %s}}}}\n" % \
                       (pos, tikzify(node.name), psshape, psshadeoption, height, width, label)
             sn += self.end_node(node)
             s += sn
