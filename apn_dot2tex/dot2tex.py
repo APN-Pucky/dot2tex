@@ -1586,9 +1586,9 @@ class Dot2PGFConv(DotConvBase):
                            bold='very thick', filled='fill', invis="",
                            rounded='rounded corners', )
         self.dashstyles = dict(
-            dashed='\pgfsetdash{{3pt}{3pt}}{0pt}',
-            dotted='\pgfsetdash{{\pgflinewidth}{2pt}}{0pt}',
-            bold='\pgfsetlinewidth{1.2pt}')
+            dashed='\\pgfsetdash{{3pt}{3pt}}{0pt}',
+            dotted='\\pgfsetdash{{\pgflinewidth}{2pt}}{0pt}',
+            bold='\\pgfsetlinewidth{1.2pt}')
 
     def start_node(self, node):
         # Todo: Should find a more elegant solution
