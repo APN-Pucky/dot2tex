@@ -2636,7 +2636,7 @@ class TeXDimProc:
         for n in self.snippets_code:
             s += "\\begin{preview}%\n"
             s += n.strip() + "%\n"
-            s += "\end{preview}%\n"
+            s += "\\end{preview}%\n"
         with open(self.tempfilename, 'w') as f:
             f.write(self.template.replace('<<preproccode>>', s))
         with open(self.tempfilename, 'r') as f:
