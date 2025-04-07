@@ -60,7 +60,3 @@ def dot2tex(dotsource, **kwargs):
 
     """
     return d2t.convert_graph(dotsource, **kwargs)
-
-  
-
-
